@@ -1,0 +1,26 @@
+<div th:replace="shared/header"></div>
+
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Novo comentário</h1>
+
+            <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block;">Novo</h6>
+            </div>
+
+            <div class="card-body">           
+                <form method="POST" action="/comentarios/criar">
+
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <textarea type="text" class="form-control" id="texto" name="texto" placeholder="Escreva aqui..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+                
+<div th:replace="shared/footer"></div>
