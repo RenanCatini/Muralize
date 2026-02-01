@@ -10,7 +10,7 @@ public class Comentario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "texto", columnDefinition = "TEXT")
     private String texto;
@@ -23,11 +23,11 @@ public class Comentario {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -4,7 +4,9 @@ import com.renancatini.Muralize.model.Comentario;
 import com.renancatini.Muralize.model.Usuario;
 import com.renancatini.Muralize.repository.ComentarioRepo;
 import com.renancatini.Muralize.repository.UsuarioRepo;
+import com.renancatini.Muralize.service.ComentarioService;
 import com.renancatini.Muralize.service.CookieService;
+import com.renancatini.Muralize.service.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,15 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ComentariosController {
 
     @Autowired
-    private ComentarioRepo comentarioRepo;
-
-    @Autowired
-    private UsuarioRepo usuarioRepo;
+    private ComentarioService comentarioService;
 
     @GetMapping("/comentarios")
     public String index(Model model) {
         // Busca todos os comentarios do banco
-        var comentarios = comentarioRepo.findAll();
+        var comentarios = comentarioService.listarTodos();
 
         // Passa a lista para o HTML com o nome "comentarios"
         model.addAttribute("comentarios", comentarios);
@@ -44,20 +43,15 @@ public class ComentariosController {
         String idLogado = CookieService.getCookie(request, "usuarioId");
         Long id = Long.parseLong(idLogado);
 
-        // Provisório
-        Usuario usuario = usuarioRepo.findById(id).orElse(null);
-        if (usuario != null) {
-            comentario.setUsuario(usuario);
-            comentarioRepo.save(comentario);
-        }
+        comentarioService.salvar(id, comentario);
 
         return "redirect:/comentarios";
     }
 
 
     @GetMapping("/comentarios/{id}/excluir")
-    public String excluir(@PathVariable int id) {
-        comentarioRepo.deleteById((long)id);
+    public String excluir(@PathVariable Long id) {
+        comentarioService.apagar(id);
 
         return "redirect:/comentarios";
     }

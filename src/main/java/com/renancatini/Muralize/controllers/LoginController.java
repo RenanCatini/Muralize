@@ -9,12 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.renancatini.Muralize.service.UsuarioService;
 
 @Controller
 public class LoginController {
 
     @Autowired
-    private UsuarioRepo usuarioRepo;
+    private UsuarioService usuarioService;
 
     @GetMapping("/login")
     public String index() {
@@ -23,7 +24,7 @@ public class LoginController {
 
     @PostMapping("/logar")
     public String logar(Model model, Usuario usuarioParam, String lembrar, HttpServletResponse response){
-        Usuario usuario = this.usuarioRepo.Login(usuarioParam.getUsername(), usuarioParam.getSenha());
+        Usuario usuario = usuarioService.autenticar(usuarioParam.getUsername(), usuarioParam.getSenha());
 
         if(usuario != null) {
             int tempoLogado = 60 * 10;
@@ -58,33 +59,10 @@ public class LoginController {
     @PostMapping("/registrar/criar")
     public String criar(Usuario usuario, String confirmaSenha, Model model) {
 
-        // Validação de usuário
-        String username = usuario.getUsername();
+        String erro = usuarioService.registrarUsuario(usuario, confirmaSenha);
 
-        if(username.contains(" ")) {
-            model.addAttribute("erro", "O nome de usuário não pode conter espaços!");
-            return "login/registrar";
-        }
-        if(username.length() < 3 || username.length() > 20) {
-            model.addAttribute("erro", "O nome de usuário tem que ter entre 3 e 20 caracteres!");
-            return "login/registrar";
-        }
-        if(!username.matches("^[a-zA-Z0-9._]+$")) {
-            model.addAttribute("erro", "Use apenas letras, números, '.' ou '_' no usuário.");
-            return "login/registrar";
-        }
-
-
-        // Validação de senha
-        if(!usuario.getSenha().equals(confirmaSenha)){
-            model.addAttribute("erro", "As senhas não coincidem!");
-            return "login/registrar";
-        }
-
-        try {
-            usuarioRepo.save(usuario);
-        } catch (Exception e) {
-            model.addAttribute("erro", "Erro ao cadastrar: Verifique se o usuário já existe.");
+        if(erro != null) {
+            model.addAttribute("erro", erro);
             return "login/registrar";
         }
 

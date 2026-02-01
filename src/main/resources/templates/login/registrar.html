@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Registrar Muralize</title>
-        <link href="/css/styles.css" rel="stylesheet" />
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
@@ -20,7 +20,7 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Criar Conta</h3></div>
                                     <div class="card-body">
-                                        <form method="post" action="/registrar/criar">
+                                        <form method="post" th:action="@{/registrar/criar}" th:object="${usuario}">
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
@@ -83,6 +83,6 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="/js/scripts.js"></script>
+        <script th:src="@{/js/scripts.js}"></script>
     </body>
 </html>

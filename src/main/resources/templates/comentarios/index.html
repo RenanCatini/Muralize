@@ -9,7 +9,7 @@
 
             <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a href="/comentarios/novo" class="btn btn-primary" style="margin-right: 20px;">Novo</a>
+                <a th:href="@{/comentarios/novo}" class="btn btn-primary" style="margin-right: 20px;">Novo</a>
                 <h6 class="m-0 font-weight-bold text-primary" style="display: inline-block;">Lousa de comentários</h6>
             </div>
             <div class="card-body">
@@ -37,7 +37,16 @@
                                 <td th:text="${#temporals.format(comentario.dataCriacao, 'dd/MM/yyyy HH:mm')}"></td>
                                 <td th:text="${comentario.texto}"></td>
                                 <!-- <td><a th:href="@{/comentarios/{id}/editar(id=${comentario.id})}" class="btn btn-warning">Alterar</a></td> -->
-                                <td><a th:if="${usernameUsuario == 'nancat' or (comentario.usuario.username == usernameUsuario)}" href="#" th:onclick="'if(confirm(\'Confirma?\')) { window.location.href = \'' + @{/comentarios/{id}/excluir(id=${comentario.id})} + '\' }'" class="btn btn-danger">Excluir</a></td>
+                                <td>
+                                    <a
+                                            th:if="${usernameUsuario == 'nancat' or (comentario.usuario.username == usernameUsuario)}"
+                                            href="javascript:void(0)"
+                                            th:data-url="@{/comentarios/{id}/excluir(id=${comentario.id})}"
+                                            onclick="if(confirm('Confirma?')) { window.location.href = this.getAttribute('data-url') }"
+                                            class="btn btn-danger">
+                                        Excluir
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
