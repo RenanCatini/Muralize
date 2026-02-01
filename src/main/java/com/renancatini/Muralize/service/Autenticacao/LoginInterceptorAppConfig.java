@@ -10,16 +10,14 @@ public class LoginInterceptorAppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor())
-                .excludePathPatterns(
-                        "/login",
-                        "/logar",
-                        "/registrar",        // ADICIONE ESTA LINHA (para abrir a tela)
-                        "/registrar/criar",  // ADICIONE ESTA LINHA (para conseguir salvar)
-                        "/error",
+                .addPathPatterns("/**") // Aplica a todas as rotas
+                .excludePathPatterns( // Exceto arquivos que não são páginas
                         "/vendor/**",
                         "/js/**",
+                        "/css/**",
+                        "/assets/**",
                         "/favicon.ico",
-                        "/css/**"
+                        "/error"
                 );
     }
 }

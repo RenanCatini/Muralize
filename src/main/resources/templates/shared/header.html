@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,14 +19,23 @@
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4" style="margin-left: auto !important;">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+
+                <li th:if="${usuarioId != null}" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user fa-fw"></i>
+                        <span class="d-none d-md-inline ms-1" th:text="${nomeUsuario}"></span>
+                    </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <!-- provisorio, adicionar configurações -->
                         <li><a class="dropdown-item" th:href="@{/}">Configurações</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" th:href="@{/sair}">Sair</a></li>
                     </ul>
+                </li>
+
+                <li th:if="${usuarioId == null}" class="nav-item">
+                    <a class="btn btn-outline-light btn-sm mt-1" th:href="@{/login}">
+                        <i class="fas fa-sign-in-alt me-1"></i> Logar
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -41,13 +50,13 @@
                                 Mural de Comentários
                             </a>
 
-                            <a class="nav-link" th:href="@{/usuarios}">
+                            <a class="nav-link" th:href="@{/usuarios}" >
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Usuarios
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
+                    <div class="sb-sidenav-footer" th:if="${nomeUsuario != null}">
                         <div class="small">Logado como:</div>
                         <span th:text="${nomeUsuario}"></span>
                     </div>

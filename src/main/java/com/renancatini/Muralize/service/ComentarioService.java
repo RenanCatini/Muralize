@@ -19,7 +19,7 @@ public class ComentarioService {
 
     // Função para listar todos os comentários
     public List<Comentario> listarTodos() {
-        return comentarioRepo.findAll();
+        return comentarioRepo.findAllByOrderByDataCriacaoDesc();
     }
 
     // Salvar um comentario de um usuario

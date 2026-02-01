@@ -45,7 +45,7 @@ public class LoginController {
         CookieService.setCookie(response, "usuarioId", "", 0);
         CookieService.setCookie(response, "nomeUsuario", "", 0);
         CookieService.setCookie(response, "usernameUsuario", "", 0);
-        return "redirect:/login";
+        return "redirect:/";
     }
 
 

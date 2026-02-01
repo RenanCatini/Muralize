@@ -1,46 +1,65 @@
 <div th:replace="~{shared/header}"></div>
 
-    <main>
-        <div class="container-fluid px-4">
-            <h1 class="mt-4">Usuarios cadastrados</h1>
+<main>
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center mt-4 mb-4">
+            <i class="fas fa-users-cog fa-2x text-primary me-3"></i>
+            <h1 class="m-0">Gestão de Usuários</h1>
+        </div>
 
-            <div class="card shadow mb-4">
+        <div class="card shadow-sm mb-4 border-0">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-secondary">
+                    <i class="fas fa-list me-1"></i> Lista de Cadastros
+                </h6>
+                <span th:if="${usernameUsuario == 'nancat'}" class="badge bg-danger">
+                    <i class="fas fa-user-shield me-1"></i> Modo Administrador
+                </span>
+            </div>
+
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Nome</th>
-                                <th>Username</th>
-                                <th>Senha</th>
-                                <th></th>
-                            </tr>
+                    <table class="table table-hover align-middle" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="table-light">
+                        <tr>
+                            <th class="text-center"># ID</th>
+                            <th><i class="fas fa-user me-1"></i> Nome</th>
+                            <th><i class="fas fa-at me-1"></i> Username</th>
+                            <th th:if="${usernameUsuario == 'nancat'}"><i class="fas fa-key me-1"></i> Senha</th>
+                            <th th:if="${usernameUsuario == 'nancat'}" class="text-center">Ações</th>
+                        </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Id</th>
-                                <th>Nome</th>
-                                <th>Username</th>
-                                <th>Senha</th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
-                        <tbody>  
-                            <tr th:each = "usuario : ${usuarios}">
-                                <td th:text="${usuario.id}"></td>
-                                <td th:text="${usuario.nome}"></td>
-                                <td th:text="${usuario.username}"></td>
-                                <td th:text="${usuario.senha}"></td>
-                                <td><a th:if="${usernameUsuario == 'nancat'}" href="#" th:onclick="'if(confirm(\'Confirma?\')) { window.location.href = \'' + @{/usuarios/{id}/excluir(id=${usuario.id})} + '\' }'" class="btn btn-danger">Excluir</a></td>
-                            </tr>
+                        <tbody>
+                        <tr th:each="usuario : ${usuarios}">
+                            <td class="text-center fw-bold text-muted" th:text="${usuario.id}"></td>
+                            <td th:text="${usuario.nome}"></td>
+                            <td>
+                                    <span class="badge bg-light text-dark border">
+                                        <i class="far fa-user me-1"></i>
+                                        <span th:text="${usuario.username}"></span>
+                                    </span>
+                            </td>
+
+                            <td th:if="${usernameUsuario == 'nancat'}">
+                                <code class="text-danger" th:text="${usuario.senha}"></code>
+                            </td>
+
+                            <td th:if="${usernameUsuario == 'nancat'}" class="text-center">
+                                <a href="javascript:void(0)"
+                                   th:data-url="@{/usuarios/{id}/excluir(id=${usuario.id})}"
+                                   onclick="if(confirm('Tem certeza que deseja apagar este usuário? Esta ação não pode ser desfeita.')) { window.location.href = this.getAttribute('data-url') }"
+                                   class="btn btn-outline-danger btn-sm px-3">
+                                    <i class="fas fa-trash-alt me-1"></i> Excluir
+                                </a>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            </div>
-
         </div>
-    </main>
-                
+
+    </div>
+</main>
+
 <div th:replace="~{shared/footer}"></div>

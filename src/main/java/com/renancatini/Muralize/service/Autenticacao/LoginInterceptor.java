@@ -13,12 +13,22 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        if(CookieService.getCookie(request,"usuarioId") != null) {
-            return true;
+
+        String uri = request.getRequestURI();
+
+        // Se o usuário estiver tentando CRIAR ou EXCLUIR algo
+        if (uri.contains("/comentarios/novo") || uri.contains("/comentarios/criar") || uri.contains("/excluir")) {
+            // Ele precisa estar logado
+            if (CookieService.getCookie(request, "usuarioId") != null) {
+                return true;
+            }
+            // Se não estiver, mandamos para o login
+            response.sendRedirect("/login");
+            return false;
         }
 
-        response.sendRedirect("/login");
-        return false;
+        // Para todas as outras rotas (Home, Listagem de comentários), permitimos a passagem
+        return true;
     }
 
     @Override
