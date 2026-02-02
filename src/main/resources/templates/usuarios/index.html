@@ -25,7 +25,6 @@
                             <th class="text-center"># ID</th>
                             <th><i class="fas fa-user me-1"></i> Nome</th>
                             <th><i class="fas fa-at me-1"></i> Username</th>
-                            <th th:if="${usernameUsuario == 'nancat'}"><i class="fas fa-key me-1"></i> Senha</th>
                             <th th:if="${usernameUsuario == 'nancat'}" class="text-center">Ações</th>
                         </tr>
                         </thead>
@@ -38,10 +37,6 @@
                                         <i class="far fa-user me-1"></i>
                                         <span th:text="${usuario.username}"></span>
                                     </span>
-                            </td>
-
-                            <td th:if="${usernameUsuario == 'nancat'}">
-                                <code class="text-danger" th:text="${usuario.senha}"></code>
                             </td>
 
                             <td th:if="${usernameUsuario == 'nancat'}" class="text-center">

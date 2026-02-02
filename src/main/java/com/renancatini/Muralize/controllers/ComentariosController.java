@@ -1,5 +1,6 @@
 package com.renancatini.Muralize.controllers;
 
+import com.renancatini.Muralize.dto.ComentarioDTO;
 import com.renancatini.Muralize.model.Comentario;
 import com.renancatini.Muralize.model.Usuario;
 import com.renancatini.Muralize.repository.ComentarioRepo;
@@ -38,12 +39,12 @@ public class ComentariosController {
     }
 
     @PostMapping("/comentarios/criar")
-    public String criar(Comentario comentario, HttpServletRequest request) {
+    public String criar(ComentarioDTO comentarioDTO, HttpServletRequest request) {
 
         String idLogado = CookieService.getCookie(request, "usuarioId");
         Long id = Long.parseLong(idLogado);
 
-        comentarioService.salvar(id, comentario);
+        comentarioService.salvar(id, comentarioDTO);
 
         return "redirect:/comentarios";
     }

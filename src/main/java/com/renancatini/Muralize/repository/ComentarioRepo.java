@@ -1,5 +1,6 @@
 package com.renancatini.Muralize.repository;
 
+import com.renancatini.Muralize.dto.ComentarioDTO;
 import com.renancatini.Muralize.model.Comentario;
 import org.springframework.data.jpa.repository.JpaRepository;
 

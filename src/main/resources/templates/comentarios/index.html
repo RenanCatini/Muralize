@@ -32,7 +32,7 @@
                                 </div>
                                 <div>
                                     <h6 class="card-title mb-0 fw-bold text-dark"
-                                        th:text="${comentario.usuario != null ? comentario.usuario.nome : 'Anônimo'}"></h6>
+                                        th:text="${comentario.nome!= null ? comentario.nome : 'Anônimo'}"></h6>
                                     <small class="text-muted">
                                         <i class="far fa-clock me-1"></i>
                                         <span th:text="${#temporals.format(comentario.dataCriacao, 'dd/MM/yyyy HH:mm')}"></span>
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
 
-                            <div th:if="${usernameUsuario == 'nancat' or (comentario.usuario != null and comentario.usuario.username == usernameUsuario)}">
+                            <div th:if="${usernameUsuario == 'nancat' or (comentario.username != null and comentario.username == usernameUsuario)}">
                                 <a href="javascript:void(0)"
                                    th:data-url="@{/comentarios/{id}/excluir(id=${comentario.id})}"
                                    onclick="if(confirm('Deseja apagar seu comentário?')) { window.location.href = this.getAttribute('data-url') }"

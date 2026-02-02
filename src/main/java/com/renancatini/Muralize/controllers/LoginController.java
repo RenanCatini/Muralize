@@ -1,5 +1,7 @@
 package com.renancatini.Muralize.controllers;
 
+import com.renancatini.Muralize.dto.LoginDTO;
+import com.renancatini.Muralize.dto.UsuarioRegistroDTO;
 import com.renancatini.Muralize.model.Usuario;
 import com.renancatini.Muralize.repository.UsuarioRepo;
 import com.renancatini.Muralize.service.CookieService;
@@ -23,12 +25,12 @@ public class LoginController {
     }
 
     @PostMapping("/logar")
-    public String logar(Model model, Usuario usuarioParam, String lembrar, HttpServletResponse response){
-        Usuario usuario = usuarioService.autenticar(usuarioParam.getUsername(), usuarioParam.getSenha());
+    public String logar(Model model, LoginDTO loginDTO, HttpServletResponse response){
+        Usuario usuario = usuarioService.autenticar(loginDTO);
 
         if(usuario != null) {
             int tempoLogado = 60 * 10;
-            if(lembrar != null) tempoLogado = 60*60*24*365; // 1 Ano de Cookie
+            if(loginDTO.lembrar() != null) tempoLogado = 60*60*24*365; // 1 Ano de Cookie
             CookieService.setCookie(response, "usuarioId", String.valueOf(usuario.getId()), tempoLogado);
             String primeiroNome = usuario.getNome().split(" ")[0];
             CookieService.setCookie(response, "nomeUsuario", primeiroNome, tempoLogado);
@@ -57,9 +59,9 @@ public class LoginController {
     }
 
     @PostMapping("/registrar/criar")
-    public String criar(Usuario usuario, String confirmaSenha, Model model) {
+    public String criar(UsuarioRegistroDTO usuarioRegistroDTO, Model model) {
 
-        String erro = usuarioService.registrarUsuario(usuario, confirmaSenha);
+        String erro = usuarioService.registrarUsuario(usuarioRegistroDTO);
 
         if(erro != null) {
             model.addAttribute("erro", erro);
